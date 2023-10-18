@@ -1,10 +1,10 @@
-const { User } = require('../models/User')
+const  User  = require('../models/User')
 const middleware = require('../middleware')
 
 const Register = async (req, res) => {
   try {
-    const { email, password, name, address, telephone, userType } = req.body
-
+    const { email, password, name, address, telephone, userType, profilePicture } = req.body
+console.log(email)
     let passwordDigest = await middleware.hashPassword(password)
 
     let existingUser = await User.findOne({ email })
@@ -14,7 +14,7 @@ const Register = async (req, res) => {
         .send('A user with that email has already been registered!')
     } else {
 
-      const user = await User.create({ name, email, passwordDigest,address, telephone, userType })
+      const user = await User.create({ name, email, passwordDigest, address, telephone, userType, profilePicture })
 
       res.send(user)
     }

@@ -35,3 +35,4 @@ mongoose
   .catch((error) => {
     console.error('Connection error:', error.message);
   });
+  console.log()
