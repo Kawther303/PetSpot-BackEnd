@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "node --watch server.js"
   },
+
+
   "author": "Bashayer",
   "license": "ISC",
   "dependencies": {
@@ -17,5 +19,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.3",
     "morgan": "^1.10.0"
+
   }
 }
