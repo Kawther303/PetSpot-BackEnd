@@ -5,8 +5,8 @@ const middleware = require('../middleware')
 const multer = require('multer')
 
 var storage = multer.diskStorage({
-  destination: '../public/',
-  filename: function (req, file, cb) {
+  destination: './public/',
+  filename: (req, file, cb) => {
     cb(null, Date.now() + '_' + file.originalname)
   }
 })
@@ -15,9 +15,8 @@ var upload = multer({
   storage: storage
 })
 
-
 router.get('/', controller.GetPetItem)
-router.post('/', controller.CreatePetItem)
+router.post('/', upload.single('image'), controller.CreatePetItem)
 
 router.put('/:petItem_id', controller.UpdatePetItem)
 

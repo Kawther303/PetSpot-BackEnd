@@ -11,7 +11,8 @@ const GetPetItem = async (req, res) => {
 }
 const CreatePetItem = async (req, res) => {
   try {
-    const item = await PetItem.create({ ...req.body })
+    const item = await PetItem.create({ ...req.body, image: req.file.path })
+
     res.send(item)
   } catch (error) {
     throw error
