@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 
-const PetSchema = mongoose.Schema(
+const PetSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     age: { type: Number, required: false },
     petType: { type: Array, require: true },
-    price: { type: Number, require: true },
+    Description: { type: String, require: false },
     forAdoption: { type: Boolean, require: false },
-    petImage: { type: String, required: true },
+    petImage: { type: String, required: false },
     price: Number
   },
   {
@@ -17,4 +17,4 @@ const PetSchema = mongoose.Schema(
 
 const Pet = mongoose.model('Pet', PetSchema)
 
-module.exports = { Pet }
+module.exports = Pet
