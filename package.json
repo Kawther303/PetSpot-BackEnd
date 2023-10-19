@@ -2,13 +2,14 @@
   "name": "petspot-backend",
   "version": "1.0.0",
   "description": "Project3-PetSpot BackEnd",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Kawther-Bashayer",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^7.6.3"
   }
 }
