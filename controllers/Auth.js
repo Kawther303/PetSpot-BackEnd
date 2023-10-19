@@ -68,10 +68,11 @@ const Login = async (req, res) => {
 
 const UpdateProfile = async (req, res) => {
   try {
-    let updateData = req.body; // Initialize updateData with the request body
+    
+    let updateData = req.body; 
 
     if (req.file && req.file.path) {
-      // If a file is uploaded, update the profilePicture field
+      // only if a file is uploaded update 
       updateData.profilePicture = req.file.path;
     }
 
