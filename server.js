@@ -1,38 +1,41 @@
-const express = require('express');
-const logger = require('morgan');
-const cors = require('cors');
-const mongoose = require('mongoose');
-require('dotenv').config();
+const express = require('express')
+const logger = require('morgan')
+const cors = require('cors')
+const mongoose = require('mongoose')
+require('dotenv').config()
 
-const AuthRouter = require('./routes/Auth');
+const AuthRouter = require('./routes/Auth')
 
+const petItemRouter = require('./routes/petItems')
+const petRouter = require('./routes/pets')
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001
 
-const app = express();
+const app = express()
 
-app.use(cors());
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(cors())
+app.use(logger('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
-app.use('/auth', AuthRouter);
-
+app.use('/auth', AuthRouter)
+app.use('/petItem', petItemRouter)
+app.use('/pet', petRouter)
 
 app.use('/', (req, res) => {
-  res.send(`Connected!`);
-});
+  res.send(`Connected!`)
+})
 
-// Database connection code 
+// Database connection code
 mongoose
   .connect(process.env.MONGODB_URI)
   .then(() => {
-    console.log('Successfully connected to MongoDB...');
+    console.log('Successfully connected to MongoDB...')
     app.listen(PORT, () => {
-      console.log(`Running Express server on Port ${PORT}...`);
-    });
+      console.log(`Running Express server on Port ${PORT}...`)
+    })
   })
   .catch((error) => {
-    console.error('Connection error:', error.message);
-  });
-  console.log()
+    console.error('Connection error:', error.message)
+  })
+console.log()
