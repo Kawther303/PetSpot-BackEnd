@@ -1,17 +1,36 @@
-const router = require('express').Router()
-const controller = require('../controllers/Auth')
-const middleware = require('../middleware')
+const router = require("express").Router()
+const controller = require("../controllers/auth")
+const middleware = require("../middleware/index.js")
+const multer = require("multer")
 
-router.post('/login', controller.Login)
-router.post('/register', controller.Register)
+//multer
+const storage = multer.diskStorage({
+  destination: "public/pictures/profilePic",
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`)
+  },
+})
+const upload = multer({ storage: storage })
+
+router.post("/login", controller.Login)
+
+router.post("/register", upload.single("profilePicture"), controller.Register)
+
 router.put(
-  '/update/:user_id',
+  "/updateprofile/:user_id",
+  upload.single("profilePicture"),
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.UpdateProfile
+)
+router.put(
+  "/update/:user_id",
   middleware.stripToken,
   middleware.verifyToken,
   controller.UpdatePassword
 )
 router.get(
-  '/session',
+  "/session",
   middleware.stripToken,
   middleware.verifyToken,
   controller.CheckSession
