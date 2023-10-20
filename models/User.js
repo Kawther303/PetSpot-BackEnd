@@ -9,7 +9,7 @@ const userSchema = new Schema({
   },
   userType: {
     type: String, 
-    required: true 
+    required: true, 
   },
   email: {
     type: String,
@@ -33,7 +33,11 @@ const userSchema = new Schema({
     type: Number, 
     required: true,
   }
-});
+}
+// {
+//   timestamps: true
+// }
+);
 
 const User = model('User', userSchema);
 
