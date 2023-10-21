@@ -1,9 +1,18 @@
-const  User  = require('../models/User')
+const User = require('../models/User')
 const middleware = require('../middleware')
+const Cart = require('../models/Cart')
 
-const Register = async (req, res) => {
+const Register = async (req, res, next) => {
   try {
-    const { email, password, name, address, telephone, userType, profilePicture } = req.body
+    const {
+      email,
+      password,
+      name,
+      address,
+      telephone,
+      userType,
+      profilePicture
+    } = req.body
 
     let passwordDigest = await middleware.hashPassword(password)
 
@@ -13,10 +22,24 @@ const Register = async (req, res) => {
         .status(400)
         .send('A user with that email has already been registered!')
     } else {
-
-      const user = await User.create({ name, email, passwordDigest, address, telephone, userType, profilePicture })
-
+      const user = await User.create({
+        name,
+        email,
+        passwordDigest,
+        address,
+        telephone,
+        userType,
+        profilePicture
+      })
       res.send(user)
+      const petItem = []
+      const pet = []
+
+      const cart = await Cart.create({
+        userId: user._id,
+        itemId: petItem,
+        petId: pet
+      })
     }
   } catch (error) {
     throw error
@@ -25,7 +48,6 @@ const Register = async (req, res) => {
 
 const Login = async (req, res) => {
   try {
-
     const { email, password } = req.body
 
     const user = await User.findOne({ email })
@@ -53,7 +75,6 @@ const Login = async (req, res) => {
 
 const UpdatePassword = async (req, res) => {
   try {
-
     const { oldPassword, newPassword } = req.body
 
     let user = await User.findById(req.params.user_id)
@@ -65,17 +86,24 @@ const UpdatePassword = async (req, res) => {
 
     if (matched) {
       let passwordDigest = await middleware.hashPassword(newPassword)
-      user = await User.findByIdAndUpdate(req.params.user_id, { passwordDigest })
+      user = await User.findByIdAndUpdate(req.params.user_id, {
+        passwordDigest
+      })
       let payload = {
         id: user.id,
         email: user.email
       }
       return res.send({ status: 'Password Updated!', user: payload })
     }
-    res.status(401).send({ status: 'Error', msg: 'Old Password did not match!' })
+    res
+      .status(401)
+      .send({ status: 'Error', msg: 'Old Password did not match!' })
   } catch (error) {
     console.log(error)
-    res.status(401).send({ status: 'Error', msg: 'An error has occurred updating password!' })
+    res.status(401).send({
+      status: 'Error',
+      msg: 'An error has occurred updating password!'
+    })
   }
 }
 
