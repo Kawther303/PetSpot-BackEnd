@@ -1,40 +1,40 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const userSchema = new Schema({
   name: {
     type: String,
     required: true,
-    minlength: [2, "First name must be more than 2 characters"],
-    maxlength: [99, "the limit is 99 characters"],
+    minlength: [2, 'First name must be more than 2 characters'],
+    maxlength: [99, 'the limit is 99 characters']
   },
   userType: {
-    type: String, 
-    required: true 
+    type: String,
+    required: true
   },
   email: {
     type: String,
     required: true,
     lowercase: true,
-    unique: true,
+    unique: true
   },
   passwordDigest: {
-    type: String, 
-    required: true 
+    type: String,
+    required: true
   },
   profilePicture: {
     type: String,
-    required: true,
+    required: true
   },
   address: {
-    type: String, 
-    required: true,
+    type: String,
+    required: true
   },
   telephone: {
-    type: Number, 
-    required: true,
+    type: Number,
+    required: true
   }
-});
+})
 
-const User = model('User', userSchema);
+const User = model('User', userSchema)
 
-module.exports = User;
+module.exports = User
