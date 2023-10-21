@@ -48,17 +48,6 @@ const AddItem = (req, res) => {
 }
 
 const AddPet = async (req, res) => {
-  //   try {
-  //     const cart = await Cart.findById(req.params.userId)
-
-  //     cart.petId.push(req.params.petId)
-  //     cart.save()
-  //     res.send(cart)
-  //   } catch (error) {
-  //     throw error
-  //   }
-  // }
-
   let newPet = req.params.petId
   Cart.findOne({ userId: req.params.userId })
     .then((cart) => {
@@ -109,11 +98,25 @@ const DeletePet = async (req, res) => {
     })
 }
 
+const ClearCart = async (req, res) => {
+  Cart.findOne({ userId: req.params.userId })
+    .then((cart) => {
+      cart.petId = []
+      cart.itemId = []
+      cart.save()
+      res.send(cart)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
 module.exports = {
   GetCart,
   AddItem,
   AddPet,
   GetUserCart,
   DeleteItem,
+  ClearCart,
   DeletePet
 }

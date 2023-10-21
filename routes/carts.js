@@ -14,4 +14,6 @@ router.get('/delItem/:userId/:ItemId', controller.DeleteItem)
 
 router.get('/delPet/:userId/:petId', controller.DeletePet)
 
+router.get('/clear/:userId', controller.ClearCart)
+
 module.exports = router
