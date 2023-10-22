@@ -7,7 +7,7 @@ const PetSchema = new mongoose.Schema(
     petType: { type: Array, require: true },
     Description: { type: String, require: false },
     forAdoption: { type: Boolean, require: false },
-    petImage: { type: String, required: false },
+    image: { type: String, required: false },
     price: Number
   },
   {

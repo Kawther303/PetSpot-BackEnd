@@ -1,7 +1,9 @@
+
 const router = require("express").Router()
 const controller = require("../controllers/auth")
 const middleware = require("../middleware/index.js")
 const multer = require("multer")
+const cartCrtl = require('../controllers/carts')
 
 //multer
 const storage = multer.diskStorage({

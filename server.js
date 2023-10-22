@@ -8,6 +8,10 @@ const AuthRouter = require('./routes/Auth')
 
 const petItemRouter = require('./routes/petItems')
 const petRouter = require('./routes/pets')
+const cartRouter = require('./routes/carts')
+const orderRouter = require('./routes/orders')
+const postRouter = require('./routes/post')
+const commentRouter = require('./routes/comment')
 
 const PORT = process.env.PORT || 3001
 
@@ -21,6 +25,10 @@ app.use(express.urlencoded({ extended: false }))
 app.use('/auth', AuthRouter)
 app.use('/petItem', petItemRouter)
 app.use('/pet', petRouter)
+app.use('/cart', cartRouter)
+app.use('/order', orderRouter)
+app.use('/post', postRouter)
+app.use('/comment', commentRouter)
 
 app.use('/', (req, res) => {
   res.send(`Connected!`)

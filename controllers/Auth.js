@@ -1,6 +1,6 @@
 const User = require("../models/User")
 const middleware = require("../middleware/index")
-
+const Cart = require('../models/Cart')
 const Register = async (req, res) => {
   try {
     console.log(req.body)
@@ -11,7 +11,6 @@ const Register = async (req, res) => {
       address,
       telephone,
       userType,
-      profilePicture,
     } = req.body
 
     let passwordDigest = await middleware.hashPassword(password)
@@ -29,15 +28,24 @@ const Register = async (req, res) => {
         address,
         telephone,
         userType,
-        profilePicture: req.file.path ,
+        profilePicture: req.file.path
       })
 
       res.send(user)
+ const petItem = []
+      const pet = []
+
+      const cart = await Cart.create({
+        userId: user._id,
+        itemId: petItem,
+        petId: pet
+      })
     }
   } catch (error) {
     throw error
   }
 }
+
 
 const Login = async (req, res) => {
   try {
@@ -125,6 +133,8 @@ const CheckSession = async (req, res) => {
   res.send(payload)
 }
 
+
+
 module.exports = {
   Register,
   Login,
@@ -132,3 +142,5 @@ module.exports = {
   UpdatePassword,
   CheckSession,
 }
+
+

@@ -1,5 +1,6 @@
 const Cart = require('../models/Cart')
 const middleware = require('../middleware')
+const User = require('../models/User')
 
 const GetCart = async (req, res) => {
   try {
@@ -9,42 +10,113 @@ const GetCart = async (req, res) => {
     throw error
   }
 }
-const CreateCart = async (req, res) => {
+const GetUserCart = async (req, res) => {
   try {
-    const cart = await Cart.create({ ...req.body })
+    const cart = await Cart.findOne({ userId: req.params.userId })
     res.send(cart)
   } catch (error) {
     throw error
   }
 }
 
-const UpdateCart = async (req, res) => {
-  try {
-    const cart = await Cart.findByIdAndUpdate(req.params.cart_id, req.body, {
-      new: true
+// const AddItem = async (req, res) => {
+//   try {
+//     console.log(req.query.itemId)
+//     const cart = await Cart.findOne({ userId: req.params.userId })
+//     cart.itemId.push(req.query.itemId)
+// Cart.save()
+//     // const cartUpdate = await Cart.findByIdAndUpdate(cart._id, cart)
+
+//     res.send(cartUpdate)
+//   } catch (error) {
+//     throw error
+//   }
+// }
+const AddItem = (req, res) => {
+  console.log('req.params' + req.params)
+  console.log('req.query' + req.query)
+  let newItem = req.params.itemId
+  Cart.findOne({ userId: req.params.userId })
+    .then((cart) => {
+      cart.itemId.push(newItem)
+      cart.save()
+      res.send(cart)
     })
-    res.send(cart)
-  } catch (error) {
-    throw error
-  }
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
-const DeleteCart = async (req, res) => {
-  try {
-    await Cart.deleteOne({ _id: req.params.cart_id })
-    res.send({
-      msg: 'Cart Deleted',
-      payload: req.params.cart_id,
-      status: 'Ok'
+const AddPet = async (req, res) => {
+  let newPet = req.params.petId
+  Cart.findOne({ userId: req.params.userId })
+    .then((cart) => {
+      cart.petId.push(newPet)
+      cart.save()
+      res.send(cart)
     })
-  } catch (error) {
-    throw error
-  }
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+const DeleteItem = async (req, res) => {
+  let theItem = req.params.ItemId
+  Cart.findOne({ userId: req.params.userId })
+    .then((cart) => {
+      let itemIndex = cart.itemId.indexOf(theItem)
+      cart.itemId.splice(itemIndex, 1)
+      cart.save()
+      res.send(cart)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+const DeletePet = async (req, res) => {
+  //   try {
+  //     const cart = await Cart.findById(req.params.userId)
+  //     let petIndex = cart.petId.lastIndexOf(req.params.petId)
+  //     cart.petId.splice(petIndex, 1)
+  //     await cart.save()
+  //     res.send(cart)
+  //   } catch (error) {
+  //     throw error
+  //   }
+  // }
+  let thePet = req.params.petId
+  Cart.findOne({ userId: req.params.userId })
+    .then((cart) => {
+      let petIndex = cart.petId.indexOf(thePet)
+      cart.petId.splice(petIndex, 1)
+      cart.save()
+      res.send(cart)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
+
+const ClearCart = async (req, res) => {
+  Cart.findOne({ userId: req.params.userId })
+    .then((cart) => {
+      cart.petId = []
+      cart.itemId = []
+      cart.save()
+      res.send(cart)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 module.exports = {
   GetCart,
-  CreateCart,
-  UpdateCart,
-  DeleteCart
+  AddItem,
+  AddPet,
+  GetUserCart,
+  DeleteItem,
+  ClearCart,
+  DeletePet
 }
