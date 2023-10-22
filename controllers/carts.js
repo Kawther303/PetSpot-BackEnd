@@ -33,8 +33,8 @@ const GetUserCart = async (req, res) => {
 //   }
 // }
 const AddItem = (req, res) => {
-  console.log('req.params' + req.params)
-  console.log('req.query' + req.query)
+  // console.log('req.params' + req.params)
+  // console.log('req.query' + req.query)
   let newItem = req.params.itemId
   Cart.findOne({ userId: req.params.userId })
     .then((cart) => {

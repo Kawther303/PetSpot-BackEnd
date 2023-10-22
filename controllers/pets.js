@@ -3,7 +3,7 @@ const middleware = require('../middleware')
 
 const GetPet = async (req, res) => {
   try {
-    const pet = await Pet.find({})
+    const pet = await Pet.find({ available: true })
     res.send(pet)
   } catch (error) {
     throw error
