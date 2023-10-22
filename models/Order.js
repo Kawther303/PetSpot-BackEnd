@@ -6,7 +6,7 @@ const OrderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    orderNumber: { type: String, require: true },
+    orderNumber: { type: Number, require: false },
     orderItems: [
       {
         itemRef: { type: String, require: true },
