@@ -8,8 +8,9 @@ const userSchema = new Schema({
     maxlength: [99, 'the limit is 99 characters']
   },
   userType: {
-    type: String,
-    required: true
+
+    type: String, 
+    required: true, 
   },
   email: {
     type: String,
@@ -33,7 +34,12 @@ const userSchema = new Schema({
     type: Number,
     required: true
   }
-})
+}
+// {
+//   timestamps: true
+// }
+);
+
 
 const User = model('User', userSchema)
 
