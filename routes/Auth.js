@@ -12,17 +12,30 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 
-router.post("/login", controller.Login)
+router.post("/signin", controller.SignIn)
 
 router.post("/register", upload.single("profilePicture"), controller.Register)
 
+// router.get(
+//   "/editProfile/:user_id",
+//   middleware.stripToken,
+//   middleware.verifyToken,
+//   controller.UpdateProfile
+// )
 router.put(
-  "/updateprofile/:user_id",
+  "/editProfile/:user_id",
   upload.single("profilePicture"),
   middleware.stripToken,
   middleware.verifyToken,
   controller.UpdateProfile
 )
+// router.get(
+//   "/show/:user_id",
+//   upload.single("profilePicture"),
+//   middleware.stripToken,
+//   middleware.verifyToken,
+//   controller.ShowProfile
+// )
 router.put(
   "/update/:user_id",
   middleware.stripToken,

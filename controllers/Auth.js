@@ -4,15 +4,8 @@ const middleware = require("../middleware/index")
 const Register = async (req, res) => {
   try {
     console.log(req.body)
-    const {
-      email,
-      password,
-      name,
-      address,
-      telephone,
-      userType,
-      profilePicture,
-    } = req.body
+    console.log(req.file)
+    const { email, password, name, address, telephone, userType } = req.body
 
     let passwordDigest = await middleware.hashPassword(password)
 
@@ -29,7 +22,7 @@ const Register = async (req, res) => {
         address,
         telephone,
         userType,
-        profilePicture: req.file.path ,
+        profilePicture: req.file.path,
       })
 
       res.send(user)
@@ -39,7 +32,7 @@ const Register = async (req, res) => {
   }
 }
 
-const Login = async (req, res) => {
+const SignIn = async (req, res) => {
   try {
     const { email, password } = req.body
 
@@ -53,7 +46,11 @@ const Login = async (req, res) => {
     if (matched) {
       let payload = {
         id: user.id,
+        name: user.name,
         email: user.email,
+        address: user.address,
+        telephone: user.telephone,
+        profilePicture: user.profilePicture,
       }
 
       let token = middleware.createToken(payload)
@@ -68,21 +65,21 @@ const Login = async (req, res) => {
 
 const UpdateProfile = async (req, res) => {
   try {
-    
-    let updateData = req.body; 
+    let updateData = req.body
 
     if (req.file && req.file.path) {
-      // only if a file is uploaded update 
-      updateData.profilePicture = req.file.path;
+      // only if a file is uploaded update
+      updateData.profilePicture = req.file.path
     }
 
-    const user = await User.findByIdAndUpdate(req.params.user_id, updateData, { new: true });
-    res.send(user);
+    const user = await User.findByIdAndUpdate(req.params.user_id, updateData, {
+      new: true,
+    })
+    res.send(user)
   } catch (error) {
-    throw error;
+    throw error
   }
-};
-
+}
 
 const UpdatePassword = async (req, res) => {
   try {
@@ -111,15 +108,21 @@ const UpdatePassword = async (req, res) => {
       .send({ status: "Error", msg: "Old Password did not match!" })
   } catch (error) {
     console.log(error)
-    res
-      .status(401)
-      .send({
-        status: "Error",
-        msg: "An error has occurred updating password!",
-      })
+    res.status(401).send({
+      status: "Error",
+      msg: "An error has occurred updating password!",
+    })
   }
 }
 
+// const ShowProfile = async (req, res) => {
+//   try {
+//     const user = await User.findById(req.params.user_id)
+//     res.send(user)
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
 const CheckSession = async (req, res) => {
   const { payload } = res.locals
   res.send(payload)
@@ -127,8 +130,9 @@ const CheckSession = async (req, res) => {
 
 module.exports = {
   Register,
-  Login,
+  SignIn,
   UpdateProfile,
+  // ShowProfile,
   UpdatePassword,
   CheckSession,
 }
