@@ -29,13 +29,13 @@ router.put(
   middleware.verifyToken,
   controller.UpdateProfile
 )
-// router.get(
-//   "/show/:user_id",
-//   upload.single("profilePicture"),
-//   middleware.stripToken,
-//   middleware.verifyToken,
-//   controller.ShowProfile
-// )
+router.get(
+  "/show/:user_id",
+  upload.single("profilePicture"),
+  middleware.stripToken,
+  middleware.verifyToken,
+  controller.ShowProfile
+)
 router.put(
   "/update/:user_id",
   middleware.stripToken,

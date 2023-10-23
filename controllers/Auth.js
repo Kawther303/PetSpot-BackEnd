@@ -115,14 +115,14 @@ const UpdatePassword = async (req, res) => {
   }
 }
 
-// const ShowProfile = async (req, res) => {
-//   try {
-//     const user = await User.findById(req.params.user_id)
-//     res.send(user)
-//   } catch (err) {
-//     console.log(err)
-//   }
-// }
+const ShowProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.user_id)
+    res.send(user)
+  } catch (err) {
+    console.log(err)
+  }
+}
 const CheckSession = async (req, res) => {
   const { payload } = res.locals
   res.send(payload)
@@ -132,7 +132,7 @@ module.exports = {
   Register,
   SignIn,
   UpdateProfile,
-  // ShowProfile,
+  ShowProfile,
   UpdatePassword,
   CheckSession,
 }
