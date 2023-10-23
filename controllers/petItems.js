@@ -3,7 +3,7 @@ const middleware = require('../middleware')
 
 const GetPetItem = async (req, res) => {
   try {
-    const petItem = await PetItem.find({})
+    const petItem = await PetItem.find({ qtyAvailable: { $gt: 0 } })
     res.send(petItem)
   } catch (error) {
     throw error
