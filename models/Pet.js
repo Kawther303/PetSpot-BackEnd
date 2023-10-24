@@ -3,12 +3,13 @@ const mongoose = require('mongoose')
 const PetSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    age: { type: Number, required: false },
+    age: { type: String, required: false },
     petType: { type: Array, require: true },
     Description: { type: String, require: false },
     forAdoption: { type: Boolean, require: false },
-    petImage: { type: String, required: false },
-    price: Number
+    image: { type: String, required: false },
+    price: Number,
+    available: Boolean
   },
   {
     timestamps: true
