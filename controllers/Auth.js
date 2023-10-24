@@ -5,6 +5,7 @@ const { randGender } = require('@ngneat/falso')
 const Register = async (req, res) => {
   try {
     console.log(req.body)
+
     const { email, password, name, address, telephone, userType } = req.body
 
     let passwordDigest = await middleware.hashPassword(password)
@@ -23,6 +24,7 @@ const Register = async (req, res) => {
         telephone,
         userType,
         profilePicture: req.file.path
+
       })
 
       res.send(user)
@@ -40,7 +42,7 @@ const Register = async (req, res) => {
   }
 }
 
-const Login = async (req, res) => {
+const SignIn = async (req, res) => {
   try {
     const { email, password } = req.body
 
@@ -54,7 +56,12 @@ const Login = async (req, res) => {
     if (matched) {
       let payload = {
         id: user.id,
-        email: user.email
+        name: user.name,
+        email: user.email,
+        address: user.address,
+        telephone: user.telephone,
+        profilePicture: user.profilePicture,
+
       }
 
       let token = middleware.createToken(payload)
@@ -78,6 +85,7 @@ const UpdateProfile = async (req, res) => {
 
     const user = await User.findByIdAndUpdate(req.params.user_id, updateData, {
       new: true
+
     })
     res.send(user)
   } catch (error) {
@@ -119,6 +127,14 @@ const UpdatePassword = async (req, res) => {
   }
 }
 
+const ShowProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.user_id)
+    res.send(user)
+  } catch (err) {
+    console.log(err)
+  }
+}
 const CheckSession = async (req, res) => {
   const { payload } = res.locals
   res.send(payload)
@@ -126,8 +142,9 @@ const CheckSession = async (req, res) => {
 
 module.exports = {
   Register,
-  Login,
+  SignIn,
   UpdateProfile,
+  ShowProfile,
   UpdatePassword,
   CheckSession
 }
