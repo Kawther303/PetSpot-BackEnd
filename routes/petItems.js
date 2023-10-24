@@ -21,5 +21,6 @@ router.post('/', upload.single('image'), controller.CreatePetItem)
 router.put('/:petItem_id', controller.UpdatePetItem)
 
 router.delete('/:petItem_id', controller.DeletePetItem)
+router.get('/:id',controller.ShowPetItem)
 
 module.exports = router
