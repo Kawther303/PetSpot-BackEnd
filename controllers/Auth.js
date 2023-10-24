@@ -65,6 +65,9 @@ const SignIn = async (req, res) => {
 
 const UpdateProfile = async (req, res) => {
   try {
+    console.log(req.body)
+    console.log(req.file)
+
     let updateData = req.body
 
     if (req.file && req.file.path) {
