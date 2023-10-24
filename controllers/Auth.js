@@ -1,6 +1,7 @@
 const User = require('../models/User')
 const middleware = require('../middleware/index')
 const Cart = require('../models/Cart')
+const { randGender } = require('@ngneat/falso')
 const Register = async (req, res) => {
   try {
     console.log(req.body)
