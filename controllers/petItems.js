@@ -9,6 +9,14 @@ const GetPetItem = async (req, res) => {
     throw error
   }
 }
+const ShowPetItem = async (req, res) => {
+  try {
+    const petItem = await PetItem.findById(req.params.id)
+    res.send(petItem)
+  } catch (error) {
+    throw error
+  }
+}
 const CreatePetItem = async (req, res) => {
   try {
     const item = await PetItem.create({ ...req.body, image: req.file.path })
@@ -49,5 +57,6 @@ module.exports = {
   GetPetItem,
   CreatePetItem,
   UpdatePetItem,
-  DeletePetItem
+  DeletePetItem,
+  ShowPetItem
 }
