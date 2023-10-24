@@ -36,8 +36,8 @@ router.put(
 router.get(
   "/show/:user_id",
   upload.single("profilePicture"),
-  middleware.stripToken,
-  middleware.verifyToken,
+  // middleware.stripToken,
+  // middleware.verifyToken,
   controller.ShowProfile
 )
 router.put(
