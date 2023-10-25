@@ -23,4 +23,6 @@ router.put('/:pet_id', controller.UpdatePet)
 
 router.delete('/:pet_id', controller.DeletePet)
 
+router.get('/:id', controller.ShowPet)
+
 module.exports = router
