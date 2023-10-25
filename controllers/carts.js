@@ -1,7 +1,8 @@
 const Cart = require('../models/Cart')
 const middleware = require('../middleware')
 const User = require('../models/User')
-
+const PetItem = require('../models/PetItem')
+const Pets = require('../models/Pet')
 const GetCart = async (req, res) => {
   try {
     const cart = await Cart.find({})
@@ -13,25 +14,14 @@ const GetCart = async (req, res) => {
 const GetUserCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ userId: req.params.userId })
+      .populate('itemId')
+      .populate('petId')
     res.send(cart)
   } catch (error) {
     throw error
   }
 }
 
-// const AddItem = async (req, res) => {
-//   try {
-//     console.log(req.query.itemId)
-//     const cart = await Cart.findOne({ userId: req.params.userId })
-//     cart.itemId.push(req.query.itemId)
-// Cart.save()
-//     // const cartUpdate = await Cart.findByIdAndUpdate(cart._id, cart)
-
-//     res.send(cartUpdate)
-//   } catch (error) {
-//     throw error
-//   }
-// }
 const AddItem = (req, res) => {
   // console.log('req.params' + req.params)
   // console.log('req.query' + req.query)

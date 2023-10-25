@@ -17,7 +17,14 @@ const CreatePet = async (req, res) => {
     throw error
   }
 }
-
+const ShowPet = async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id)
+    res.send(pet)
+  } catch (error) {
+    throw error
+  }
+}
 const UpdatePet = async (req, res) => {
   try {
     const pet = await Pet.findByIdAndUpdate(req.params.pet_id, req.body, {
@@ -46,5 +53,6 @@ module.exports = {
   GetPet,
   CreatePet,
   UpdatePet,
-  DeletePet
+  DeletePet,
+  ShowPet
 }
