@@ -58,6 +58,7 @@ const SignIn = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        userType: user.userType,
         address: user.address,
         telephone: user.telephone,
         profilePicture: user.profilePicture,
@@ -135,6 +136,7 @@ const ShowProfile = async (req, res) => {
     console.log(err)
   }
 }
+
 const CheckSession = async (req, res) => {
   const { payload } = res.locals
   res.send(payload)
